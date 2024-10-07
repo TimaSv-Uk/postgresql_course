@@ -27,4 +27,7 @@
             </tbody>
         </table>
     </div>
+    <div class="mt-4">
+        {{ $measurements->links() }}
+    </div>
 </x-app-layout>

@@ -61,7 +61,7 @@ Route::get('/measured-units', function() {
 });
 
 Route::get('/measurements', function() {
-    $measurements = Measurment::take(20)->get();
+    $measurements = Measurment::paginate(20);
     return view('db_tables.measurements', ['measurements' => $measurements]);
 });
 
