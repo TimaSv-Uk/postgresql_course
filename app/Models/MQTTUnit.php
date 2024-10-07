@@ -6,13 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Measurment extends Model
+class MQTTUnit extends Model
 {
-
     use HasFactory;
-    protected $table = 'measurment';
-    protected $primaryKey = 'id_station';
-    protected $keyType = 'string';
+
+    protected $table = 'mqtt_unit';
+
+    public $incrementing = false;
+    protected $primaryKey = ['id_station', 'id_measured_unit'];
+    public $timestamps = false;
 
     public function station():BelongsTo
     {
@@ -24,12 +26,3 @@ class Measurment extends Model
         return $this->belongsTo(MeasuredUnit::class, 'id_measured_unit', 'id_measured_unit');
     }
 }
-
-/* CREATE TABLE Measurment ( */
-/*     ID_Measurment CHAR(8) PRIMARY KEY, */
-/*     Measurement_Time TIMESTAMP, */
-/*     Measurement_Value DECIMAL(10,2), */
-/*     Compression_Level int, */
-/*     ID_Station char(4) REFERENCES Station(ID_Station), */
-/*     ID_Measured_Unit INT REFERENCES Measured_Unit(ID_Measured_Unit) */
-/* ); */

@@ -1,17 +1,20 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Models\FavoriteStation;
 use App\Models\Measurment;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
-
-use function Laravel\Prompts\select;
+use PHPUnit\Metadata\Uses;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/dashboard', function () {
-    /* dd(DB::select("select * from Coordinates")); */
+
+    dd(User::all(),FavoriteStation::with('user')->get());
+
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 

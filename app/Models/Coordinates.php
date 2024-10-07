@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Coordinates extends Model
 {
 
-    protected $table = 'coordinates';
     use HasFactory;
+    protected $primaryKey = 'id_coordinates';
+    protected $keyType = 'string';
+    public $incrementing = false;
+    protected $table = 'coordinates';
 }

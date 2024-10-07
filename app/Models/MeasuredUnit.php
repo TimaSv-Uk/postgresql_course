@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class MeasuredUnit extends Model
 {
 
-    protected $table = 'measured_unit';
     use HasFactory;
+    protected $table = 'measured_unit';
 }

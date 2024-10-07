@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class MQTTServers extends Model
 {
-    protected $table = 'mqtt_servers';
     use HasFactory;
+    protected $table = 'mqtt_server';
+    protected $primaryKey = 'id_server';
+    protected $keyType = 'string';
 }
