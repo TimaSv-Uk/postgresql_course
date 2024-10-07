@@ -14,4 +14,10 @@
             </div>
         </div>
     </div>
+    <a href="{{ url('/categories') }}">Visit Categories</a><br>
+    <a href="{{ url('/favorite-stations') }}">Visit Favorite Stations</a><br>
+    <a href="{{ url('/measured-units') }}">Visit Measured Units</a><br>
+    <a href="{{ url('/stations') }}">Visit Stations</a><br>
+    <a href="{{ url('/mqtt-servers') }}">Visit MQTT Servers</a><br>
+    <a href="{{ url('/optimal-values') }}">Visit Optimal Values</a><br>
 </x-app-layout>
