@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Str;
-
+/*use Illuminate\Support\Facades\Auth;*/
 return [
 
     /*
@@ -30,7 +30,20 @@ return [
     */
 
     'connections' => [
-
+        /*'pgsql_dinamic' => [*/
+        /*    'driver' => 'pgsql',*/
+        /*    'url' => env('DB_URL'),*/
+        /*    'host' => env('DB_HOST', '127.0.0.1'),*/
+        /*    'port' => env('DB_PORT', '5432'),*/
+        /*    'database' => env('DB_DATABASE', 'laravel'),*/
+        /*    'username' => Auth::user()->name,*/
+        /*    'password' => Auth::user()->name,*/
+        /*    'charset' => env('DB_CHARSET', 'utf8'),*/
+        /*    'prefix' => '',*/
+        /*    'prefix_indexes' => true,*/
+        /*    'search_path' => 'public',*/
+        /*    'sslmode' => 'prefer',*/
+        /*],*/
         'sqlite' => [
             'driver' => 'sqlite',
             'url' => env('DB_URL'),

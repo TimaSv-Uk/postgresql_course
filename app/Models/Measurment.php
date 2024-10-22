@@ -23,6 +23,8 @@ class Measurment extends Model
     {
         return $this->belongsTo(MeasuredUnit::class, 'id_measured_unit', 'id_measured_unit');
     }
+
+/*Measurements*/
 }
 
 /* CREATE TABLE Measurment ( */

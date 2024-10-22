@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
-
+use Illuminate\Support\Facades\DB;
 class ProfileController extends Controller
 {
     /**
@@ -16,8 +16,11 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $postgresql_user = DB::select("SELECT * FROM pg_catalog.pg_user WHERE usename = ?;",[Auth::user()->name]);
+
         return view('profile.edit', [
             'user' => $request->user(),
+            'postgresql_user' => $postgresql_user[0],
         ]);
     }
 

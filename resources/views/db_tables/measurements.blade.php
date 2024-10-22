@@ -8,9 +8,9 @@
                     <th class="py-3 px-4 border-b">ID Measurement</th>
                     <th class="py-3 px-4 border-b">Measurement Time</th>
                     <th class="py-3 px-4 border-b">Measurement Value</th>
-                    <th class="py-3 px-4 border-b">Compression Level</th>
-                    <th class="py-3 px-4 border-b">ID Station</th>
-                    <th class="py-3 px-4 border-b">ID Measured Unit</th>
+                    {{--<th class="py-3 px-4 border-b">Compression Level</th>--}}
+                    <th class="py-3 px-4 border-b">Station name</th>
+                    <th class="py-3 px-4 border-b">Measured Unit</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,9 +19,9 @@
                         <td class="py-3 px-4 border-b">{{ trim($measurement->id_measurment) }}</td>
                         <td class="py-3 px-4 border-b">{{ $measurement->measurement_time }}</td>
                         <td class="py-3 px-4 border-b">{{ $measurement->measurement_value }}</td>
-                        <td class="py-3 px-4 border-b">{{ $measurement->compression_level ?? 'N/A' }}</td>
-                        <td class="py-3 px-4 border-b">{{ trim($measurement->id_station) }}</td>
-                        <td class="py-3 px-4 border-b">{{ $measurement->id_measured_unit }}</td>
+                        {{--<td class="py-3 px-4 border-b">{{ $measurement->compression_level ?? 'N/A' }}</td>--}}
+                        <td class="py-3 px-4 border-b">{{ trim($measurement->station->name) }}</td>
+                        <td class="py-3 px-4 border-b">{{ $measurement->measured_unit->title }}</td>
                     </tr>
                 @endforeach
             </tbody>
