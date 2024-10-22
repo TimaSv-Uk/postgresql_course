@@ -24,14 +24,4 @@ class Measurment extends Model
         return $this->belongsTo(MeasuredUnit::class, 'id_measured_unit', 'id_measured_unit');
     }
 
-/*Measurements*/
 }
-
-/* CREATE TABLE Measurment ( */
-/*     ID_Measurment CHAR(8) PRIMARY KEY, */
-/*     Measurement_Time TIMESTAMP, */
-/*     Measurement_Value DECIMAL(10,2), */
-/*     Compression_Level int, */
-/*     ID_Station char(4) REFERENCES Station(ID_Station), */
-/*     ID_Measured_Unit INT REFERENCES Measured_Unit(ID_Measured_Unit) */
-/* ); */

@@ -64,7 +64,6 @@ class RegisteredUserController extends Controller
             DB::rollBack();
             return back()->withErrors(['registration' => 'An unexpected error occurred.']);
         }
-
             /*$this->grantViewerRole($user->name);*/
         return redirect(route('dashboard', absolute: false));
     }

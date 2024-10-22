@@ -23,4 +23,8 @@ class Station extends Model
     {
         return $this->BelongsTo(Coordinates::class,"id_station","id_station");
     }
+    public  function station_measurments():HasMany {
+
+        return $this->hasMany(Measurment::class,"id_station","id_station");
+    }
 }
