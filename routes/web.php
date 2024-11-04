@@ -3,33 +3,44 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Middleware\SetDatabaseConnection;
-use App\Models\Measurment;
 use Illuminate\Support\Facades\Route;
+use App\Models\Measurment;
 use App\Models\Coordinates;
 use App\Models\MeasuredUnit;
 use App\Models\Station;
 use App\Models\MQTTServers;
 use App\Models\OptimalValue;
-
+use App\Http\Controllers\PowerBIController;
+use App\Http\Controllers\DataVisualization;
 Route::get('/', function () {
     /*$currentConnection = DB::getDefaultConnection();*/
     /*dd($currentConnection);*/
+    /*'coordinates' => $coordinates*/
     return view('welcome');
 });
 
 
 Route::middleware(SetDatabaseConnection::class)->group(function () {
 
-    Route::get('/reports',[ReportController::class,"index_station"])->name('report.index_station');
-    Route::get('report1/export', [ReportController::class, 'export_station']);
+    Route::get('/reports', [ReportController::class, "index_station"])->name('report.index_station');
+    Route::post('report1/export_xlsx', [ReportController::class, 'export_station_xlsx'])->name('report.report1');;
+    Route::post('report1/export_csv', [ReportController::class, 'export_station_csv']);
+    Route::post('report1/export_mpdf', [ReportController::class, 'export_station_mpdf']);
     Route::post('report2/export', [ReportController::class, 'results_from_station_by_tyme'])->name('report.results_from_station_by_tyme');
 
+
+    Route::get('/data_visualization', [DataVisualization::class, "index"])->name('data_visualization.index');
+    Route::get('/data_visualization/1', [DataVisualization::class, "visualization1"])->name('data_visualization.1');
+    Route::get('/data_visualization/2', [DataVisualization::class, "visualization2"])->name('data_visualization.2');
+    Route::get('/data_visualization/3', [DataVisualization::class, "visualization3"])->name('data_visualization.3');
+    Route::get('/data_visualization/4', [DataVisualization::class, "visualization4"])->name('data_visualization.4');
 
     Route::get('/dashboard', function () {
         /*$currentConnection = DB::getDefaultConnection();*/
         /*dd($currentConnection);*/
-        /*dd(DB::select("SELECT * FROM pg_catalog.pg_user WHERE usename = ?;",[Auth::user()->name]));*/
-        return view('dashboard');
+        /*dd(DB::select("SELECT * FROM information_schema.tables",));*/
+
+        return view('dashboard', ["coordinates" => Coordinates::all()]);
     })->middleware(['auth', 'verified'])->name('dashboard');
 
     Route::middleware('auth')->group(function () {

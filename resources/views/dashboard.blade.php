@@ -17,5 +17,7 @@
         {{--<a href="{{ url('/mqtt-units') }}" class="text-blue-500 hover:text-blue-700 transition duration-200">Visit MQTT Units</a>--}}
         {{--<a href="{{ url('/coordinates') }}" class="text-blue-500 hover:text-blue-700 transition duration-200">Visit Coordinates</a>--}}
     </div>
-
+      <div class="w-[80vw] bg-primary rounded-[10px] p-4 sm:p-6 lg:p-8 lg:sticky lg:top-0 h-screen">
+        @include('components.map.map_show', ['coordinates' => $coordinates])
+      </div>
 </x-app-layout>

@@ -10,29 +10,55 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use function Illuminate\Log\log;
+use App\Exports\StationStartTimeWithData;
+use Maatwebsite\Excel\Excel as ExcelFormat;
 
 class ReportController extends Controller
 {
     public function index_station(): View
     {
 
-        /*dd(*/
-        /*    Station::with(['station_measurments' => function ($query) {*/
-        /*        $query->limit(5);*/
-        /*    }])*/
-        /*    ->get()*/
-        /*,Measurment::take(1)->get()*/
-        /*);*/
         return view('reports.station_list_form', ["stations" => Station::all()]);
     }
-    public function export_station()
+    public function export_station_xlsx(Request $request)
     {
-        return Excel::download(new DataExport, 'stations.xlsx');
-        /*return Excel::download(new InvoicesExport, 'invoices.csv', \Maatwebsite\Excel\Excel::CSV, [*/
-        /*      'Content-Type' => 'text/csv',*/
-        /*]);*/
+        $validatedData = $request->validate([
+            'export_format' => 'required|string|in:xlsx,csv,pdf',
+        ]);
+        $results = DB::select(
+            "SELECT s.name,
+                ROUND(AVG(m.Measurement_Value), 2) AS avg_value,
+                ROUND(MAX(m.Measurement_Value), 2) AS max_value,
+                ROUND(MIN(m.Measurement_Value), 2) AS min_value,
+                MIN(m.Measurement_Time) AS start_working_at
+            FROM Measurment m
+            JOIN Station s ON m.ID_Station = s.ID_Station
+                 GROUP BY s.name;"
+        );
+        $export_data = new StationStartTimeWithData(
+            $results
+        );
+        return match ($validatedData['export_format']) {
+            'xlsx' => Excel::download($export_data, 'StationStartTimeWithData.xlsx'),
+
+            'csv' => Excel::download($export_data, 'StationStartTimeWithData.csv', ExcelFormat::CSV, [
+                'Content-Type' => 'text/csv',
+            ]),
+
+            'pdf' => Excel::download($export_data, 'StationStartTimeWithData.pdf', ExcelFormat::MPDF),
+
+            default => abort(400, 'Invalid export format'), // Handle unexpected formats
+        };
+    }
+    public function export_station_csv()
+    {
+        return Excel::download(new DataExport, 'stations.csv', \Maatwebsite\Excel\Excel::CSV, [
+            'Content-Type' => 'text/csv',
+        ]);
+    }
+    public function export_station_mpdf()
+    {
+        return Excel::download(new DataExport, 'stations.pdf', \Maatwebsite\Excel\Excel::TCPDF);
     }
     public function results_from_station_by_tyme(Request $request)
     {
@@ -40,6 +66,7 @@ class ReportController extends Controller
             'id_station' => 'required|string|exists:station,id_station',
             'start_time' => 'required|date|before_or_equal:end_time',
             'end_time' => 'required|date|after_or_equal:start_time',
+            'export_format' => 'required|in:xlsx,csv,pdf',
         ]);
 
         $start_time = \Carbon\Carbon::parse($validatedData['start_time'])->format('Y-m-d H:i:s');
@@ -62,7 +89,22 @@ class ReportController extends Controller
                 $end_time
             ]
         );
+        $export_data = new StationMeasurementExport($results);
+        return match ($validatedData['export_format']) {
+            'xlsx' => Excel::download($export_data, 'station_measurements.xlsx'),
 
-        return Excel::download(new StationMeasurementExport($results), 'station_measurements.xlsx');
+            'csv' => Excel::download($export_data, 'station_measurements.csv', ExcelFormat::CSV, [
+                'Content-Type' => 'text/csv',
+            ]),
+
+            'pdf' => Excel::download($export_data, 'station_measurements.pdf', ExcelFormat::MPDF, [
+                'orientation' => 'L',
+
+            ]),
+
+            default => abort(400, 'Invalid export format'), // Handle unexpected formats
+        };
+        return;
     }
+
 }

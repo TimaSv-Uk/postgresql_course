@@ -26,7 +26,7 @@ class SetDatabaseConnection
                 'url' => env('DB_URL'),
                 'host' => env('DB_HOST', '127.0.0.1'),
                 'port' => env('DB_PORT', '5432'),
-                'database' => env('DB_DATABASE', 'laravel'),
+                'database' => env('DB_DATABASE', 'DB_NUBiP'),
                 'username' => strtolower($user->name),
                 'password' => $user->password,
                 'charset' => env('DB_CHARSET', 'utf8'),
