@@ -18,11 +18,10 @@ Route::get('/report1', function () {
 
     $results = DB::select(
         "SELECT s.name,
-                ROUND(AVG(m.Measurement_Value), 2) AS avg_value,
-                ROUND(MAX(m.Measurement_Value), 2) AS max_value,
-                ROUND(MIN(m.Measurement_Value), 2) AS min_value,
-                MIN(m.Measurement_Time) AS start_working_at
+                MIN(m.Measurement_Time) AS start_working_at,
+                ARRAY_AGG(DISTINCT mu.Title) AS titles
             FROM Measurment m
+            JOIN Measured_Unit mu ON mu.ID_Measured_Unit = m.ID_Measured_Unit
             JOIN Station s ON m.ID_Station = s.ID_Station
                  GROUP BY s.name;"
     );
@@ -33,7 +32,6 @@ Route::get('/report1', function () {
 Route::get('/report2', function (Request $request) {
 
     $validatedData = $request->validate([
-        'id_station' => 'required|string|exists:station,id_station',
         'start_time' => 'required|date|before_or_equal:end_time',
         'end_time' => 'required|date|after_or_equal:start_time',
     ]);
@@ -49,11 +47,9 @@ Route::get('/report2', function (Request $request) {
             FROM Measurment m
             JOIN Station s ON m.ID_Station = s.ID_Station
             JOIN Measured_Unit mu ON mu.ID_Measured_Unit = m.ID_Measured_Unit
-            WHERE s.id_station = ?
-            AND m.Measurement_Time BETWEEN ? AND ?
+            WHERE m.Measurement_Time BETWEEN ? AND ?
             GROUP BY s.name, mu.Title",
         [
-            $validatedData['id_station'],
             $start_time,
             $end_time
         ]

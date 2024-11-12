@@ -17,7 +17,6 @@ class ReportController extends Controller
 {
     public function index_station(): View
     {
-
         return view('reports.station_list_form', ["stations" => Station::all()]);
     }
     public function export_station_xlsx(Request $request)
@@ -27,11 +26,10 @@ class ReportController extends Controller
         ]);
         $results = DB::select(
             "SELECT s.name,
-                ROUND(AVG(m.Measurement_Value), 2) AS avg_value,
-                ROUND(MAX(m.Measurement_Value), 2) AS max_value,
-                ROUND(MIN(m.Measurement_Value), 2) AS min_value,
-                MIN(m.Measurement_Time) AS start_working_at
+                MIN(m.Measurement_Time) AS start_working_at,
+                ARRAY_AGG(DISTINCT mu.Title) AS titles
             FROM Measurment m
+            JOIN Measured_Unit mu ON mu.ID_Measured_Unit = m.ID_Measured_Unit
             JOIN Station s ON m.ID_Station = s.ID_Station
                  GROUP BY s.name;"
         );
@@ -45,7 +43,7 @@ class ReportController extends Controller
                 'Content-Type' => 'text/csv',
             ]),
 
-            'pdf' => Excel::download($export_data, 'StationStartTimeWithData.pdf', ExcelFormat::MPDF),
+            'pdf' => Excel::download($export_data, 'StationStartTimeWithData.pdf', ExcelFormat::DOMPDF),
 
             default => abort(400, 'Invalid export format'), // Handle unexpected formats
         };
@@ -69,9 +67,6 @@ class ReportController extends Controller
             'export_format' => 'required|in:xlsx,csv,pdf',
         ]);
 
-        $start_time = \Carbon\Carbon::parse($validatedData['start_time'])->format('Y-m-d H:i:s');
-        $end_time = \Carbon\Carbon::parse($validatedData['end_time'])->format('Y-m-d H:i:s');
-
         $results = DB::select(
             "SELECT s.name, mu.Title,
                 ROUND(AVG(m.Measurement_Value), 2) AS avg_value,
@@ -85,26 +80,27 @@ class ReportController extends Controller
             GROUP BY s.name, mu.Title",
             [
                 $validatedData['id_station'],
-                $start_time,
-                $end_time
+                $validatedData['start_time'],
+                $validatedData['end_time']
             ]
         );
-        $export_data = new StationMeasurementExport($results);
-        return match ($validatedData['export_format']) {
-            'xlsx' => Excel::download($export_data, 'station_measurements.xlsx'),
 
-            'csv' => Excel::download($export_data, 'station_measurements.csv', ExcelFormat::CSV, [
+        $filename = "station_measurements_{$validatedData['start_time']}_to_{$validatedData['end_time']}";
+
+        $export_data = new StationMeasurementExport($results);
+
+        return match ($validatedData['export_format']) {
+            'xlsx' => Excel::download($export_data, "{$filename}.xlsx"),
+
+            'csv' => Excel::download($export_data, "{$filename}.csv", ExcelFormat::CSV, [
                 'Content-Type' => 'text/csv',
             ]),
 
-            'pdf' => Excel::download($export_data, 'station_measurements.pdf', ExcelFormat::MPDF, [
+            'pdf' => Excel::download($export_data, "{$filename}.pdf", ExcelFormat::DOMPDF, [
                 'orientation' => 'L',
-
             ]),
 
             default => abort(400, 'Invalid export format'), // Handle unexpected formats
         };
-        return;
     }
-
 }

@@ -6,7 +6,7 @@
 максимальних значень шкідливих частинок PM2.5, PM10 в розрізі
 областей за {{$start_time}} - {{$end_time}}</h1>
 
-        <div class="w-full">
+        <div class="w-[800px]">
         <canvas id="myChart"></canvas>
         </div>
         <h1 class="text-xl font-semibold mb-4">Change time period:</h1>
@@ -16,7 +16,7 @@
 
                 <div class="mb-4">
                     <label for="start_time" class="block text-sm font-medium text-gray-700">Початкова дата та час:</label>
-                    <input type="datetime-local" name="start_time" id="start_time" class="form-input mt-1 block w-full" required value="{{ old('start_time', '2022-08-02T16:04') }}">
+                    <input type="datetime-local" name="start_time" id="start_time" class="form-input mt-1 block w-full" required value="{{ old('start_time', '2021-08-02T16:04') }}">
                 </div>
 
                 <div class="mb-4">

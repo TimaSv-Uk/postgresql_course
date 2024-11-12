@@ -5,7 +5,6 @@
         <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
             <thead>
                 <tr class="bg-gray-200 text-gray-700">
-                    <th class="py-3 px-4 border-b">ID Measured Unit</th>
                     <th class="py-3 px-4 border-b">Title</th>
                     <th class="py-3 px-4 border-b">Unit</th>
                 </tr>
@@ -13,7 +12,6 @@
             <tbody>
                 @foreach($measuredUnits as $unit)
                     <tr class="hover:bg-gray-100 transition duration-200">
-                        <td class="py-3 px-4 border-b">{{ $unit->id_measured_unit }}</td>
                         <td class="py-3 px-4 border-b">{{ $unit->title }}</td>
                         <td class="py-3 px-4 border-b">{{ $unit->unit }}</td>
                     </tr>

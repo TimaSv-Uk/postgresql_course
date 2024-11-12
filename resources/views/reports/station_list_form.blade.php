@@ -1,23 +1,13 @@
 <x-app-layout>
     <div class="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
+        <iframe title="report1_correct" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiZTYzMWQwYzQtYzk2YS00NWM1LWJjOTgtYmI3NzBhMmQ3MTIzIiwidCI6ImQ2NTk5ZjY4LTJkMmMtNGNhZS05ZWNmLTYwMDUyYjdkMGJkOSIsImMiOjl9" frameborder="0" allowFullScreen="true"></iframe>
 
-        <p class="mb-4">
+        <h2 class="text-lg font-bold mb-4">
             Список підключених станцій. У списку вказати назву станції, з якої дати вона була підключена, які параметри повітря надає. Врахувати, що у різних станціях можуть бути різні параметри.
-        </p>
-
-        <h2 class="text-lg font-bold mb-4">Генерація звіту</h2>
+        </h2>
         <form action="{{ route('report.report1') }}" method="POST" class="space-y-4">
             @csrf
 
-            <div class="mb-4">
-                <label for="station" class="block text-sm font-medium text-gray-700">Виберіть станцію:</label>
-                <select name="id_station" id="station" class="form-select mt-1 block w-full" required>
-                    <option value="" disabled selected>Оберіть станцію</option>
-                    @foreach($stations as $station)
-                        <option value="{{ $station->id_station }}">{{ $station->name }}</option>
-                    @endforeach
-                </select>
-            </div>
 
             <div class="mb-4">
                 <label for="format" class="block text-sm font-medium text-gray-700">Формат експорту:</label>
@@ -37,8 +27,11 @@
         </form>
 
         <div class="container">
-            <h2 class="text-lg font-bold mb-4">Звіт вимірювань станції за часовий період</h2>
+            <h2 class="text-lg font-bold mb-4">Звіт вимірювань станції за часовий період: 2022-08-02T16:04 - 2022-08-02T16:32</h2>
 
+            <iframe title="report2" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiYTg4MDVmMWMtNGZkZC00NmM2LTkxMWUtNGE0ZjI2ODc4NmJmIiwidCI6ImQ2NTk5ZjY4LTJkMmMtNGNhZS05ZWNmLTYwMDUyYjdkMGJkOSIsImMiOjl9" frameborder="0" allowFullScreen="true"></iframe>
+
+            <h2 class="text-lg font-bold mb-4">Заенерувати звіт вимірювань станції за вказаний часовий період</h2>
             <form action="{{ route('report.results_from_station_by_tyme') }}" method="POST" class="space-y-4">
                 @csrf
 

@@ -3,11 +3,13 @@
 namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromArray;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class StationStartTimeWithData implements FromArray, WithHeadings, WithStyles
+class StationStartTimeWithData implements FromArray,  WithStyles,WithHeadings
 {
     protected $data;
 
@@ -25,13 +27,10 @@ class StationStartTimeWithData implements FromArray, WithHeadings, WithStyles
     {
         return [
             'Station Name',
-            'Average Value',
-            'Max Value',
-            'Min Value',
             'Earliest Measurement Time',
+            'Mesured units'
         ];
     }
-
     protected function formatData($measurements)
     {
         $formattedData = [];
@@ -39,10 +38,8 @@ class StationStartTimeWithData implements FromArray, WithHeadings, WithStyles
         foreach ($measurements as $measurement) {
             $formattedData[] = [
                 $measurement->name,
-                $measurement->avg_value,
-                $measurement->max_value,
-                $measurement->min_value,
                 $measurement->start_working_at,
+                $measurement->titles,
             ];
         }
 
@@ -51,16 +48,14 @@ class StationStartTimeWithData implements FromArray, WithHeadings, WithStyles
 
     public function styles(Worksheet $sheet)
     {
-        $sheet->getStyle('A1:E1')->getFont()->setBold(true);
+        $sheet->getStyle('A1:C1')->getFont()->setBold(true);
+
         $sheet->getDefaultRowDimension()->setRowHeight(20);
         $sheet->getColumnDimension('A')->setWidth(30);
         $sheet->getColumnDimension('B')->setWidth(15);
+        $sheet->getColumnDimension('C')->setWidth(30);
 
         $sheet->getStyle('B')->getAlignment()->setHorizontal('center');
-        $sheet->getColumnDimension('C')->setWidth(15);
         $sheet->getStyle('C')->getAlignment()->setHorizontal('center');
-        $sheet->getColumnDimension('D')->setWidth(15);
-        $sheet->getStyle('D')->getAlignment()->setHorizontal('center');
-        $sheet->getColumnDimension('E')->setWidth(30);
     }
 }

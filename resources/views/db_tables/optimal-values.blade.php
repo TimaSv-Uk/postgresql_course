@@ -14,7 +14,7 @@
                 @foreach($optimalValues as $value)
                     <tr class="hover:bg-gray-100 transition duration-200">
                         <td class="py-3 px-4 border-b">{{ trim($value->category->designation) }}</td>
-                        <td class="py-3 px-4 border-b">{{ $value->measured_unit->unit }}</td>
+                        <td class="py-3 px-4 border-b">{{ $value->measured_unit->title }}</td>
                         <td class="py-3 px-4 border-b">{{ $value->optimal_range }}</td>
                     </tr>
                 @endforeach

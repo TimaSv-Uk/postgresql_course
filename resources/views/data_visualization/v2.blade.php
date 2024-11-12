@@ -1,10 +1,10 @@
 <x-app-layout>
     <div class="flex flex-col gap-4 p-6 m-6 border border-gray-300 rounded-lg shadow-md bg-white">
-        <h1 class="text-2xl font-semibold mb-4">Візуалізація кількості разів, коли рівень PM2.5, PM10 був шкідливим на станції: {{$selected_station->name}}</h1>
+        <h1 class="text-2xl font-semibold mb-4">Візуалізація кількості разів, коли рівень PM2.5 був шкідливим на станції: {{$selected_station->name}}</h1>
 
 
-            <div class="overflow-x-auto">
-        <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+            <div class="overflow-x-auto flex flex-row gap-24">
+        <table class="min-w-[500px] bg-white border border-gray-300 rounded-lg shadow-md">
             <thead >
                 <tr class="bg-gray-200 text-gray-700">
                     <th class="py-3 px-4 border-b">Category</th>
@@ -21,10 +21,11 @@
             </tbody>
         </table>
 
-        </div>
-        <div class="w-full">
+        <div class="w-96">
         <canvas id="myChart"></canvas>
         </div>
+        </div>
+
         <form action="{{ route('data_visualization.2') }}" method="GET" class="space-y-4">
 
             <div class="mb-4">
