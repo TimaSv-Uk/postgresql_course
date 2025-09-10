@@ -17,25 +17,20 @@ This project is a web application for monitoring air quality. It provides users 
 The application allows users to view data, generate reports, and see visualized analytics to help track environmental health and pollution trends.
 
 
-### Screenshots
-Interface
-![Alt text](images/"Реалізація інтерфейсу 1".png)
-![Alt text](images/"Реалізація інтерфейсу 2".png)
-![Alt text](images/"Реалізація інтерфейсу 3".png)
+#### Interface
+![Interface 1](images/Реалізація%20інтерфейсу%201.png)
+![Interface 2](images/Реалізація%20інтерфейсу%202.png)
+![Interface 3](images/Реалізація%20інтерфейсу%203.png)
 
+#### Reports
+![Report 1](images/Формування%20звітної%20інформації%201.png)
+![Report 2](images/Формування%20звітної%20інформації%202.png)
 
-Reports
-
-![Alt text](images/"Формування звітної інформації 1".png)
-![Alt text](images/"Формування звітної інформації 2".png)
-![Alt text](images/"Формування звітної інформації 3".png)
-
-
-Charts
-![Alt text](images/"Графічне зображення отриманих результатів 1".png)
-![Alt text](images/"Графічне зображення отриманих результатів 2".png)
-![Alt text](images/"Графічне зображення отриманих результатів 3".png)
-![Alt text](images/"Графічне зображення отриманих результатів 4".png)
+#### Charts
+![Chart 1](images/Графічне%20зображення%20отриманих%20результатів%201.png)
+![Chart 2](images/Графічне%20зображення%20отриманих%20результатів%202.png)
+![Chart 3](images/Графічне%20зображення%20отриманих%20результатів%203.png)
+![Chart 4](images/Графічне%20зображення%20отриманих%20результатів%204.png)
 
 ### Features
 
